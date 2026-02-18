@@ -52,17 +52,16 @@ export async function auth(): Promise<Session | null> {
 
   if (!authUser?.email) return null;
 
-  let { data: dbUser } = await supabase
+  const { data: dbUserData } = await supabase
     .from('users')
     .select('*')
     .eq('id', authUser.id)
     .single();
 
-  if (!dbUser && process.env.SUPABASE_SERVICE_ROLE_KEY) {
-    dbUser = await syncUserToDb(authUser);
+  let user: UserRow | null = dbUserData as UserRow | null;
+  if (!user && process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    user = await syncUserToDb(authUser);
   }
-
-  const user = dbUser as UserRow | null;
   if (!user || user.blocked) return null;
 
   return {
