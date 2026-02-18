@@ -12,6 +12,7 @@ const PLAN_TEMPLATES = [
     name: "Monthly",
     price: "$9.99",
     period: "/month",
+    popular: false,
     features: [
       "7-day extended forecast",
       "Save multiple cities",
@@ -24,13 +25,13 @@ const PLAN_TEMPLATES = [
     name: "Yearly",
     price: "$99.99",
     period: "/year",
+    popular: true,
     features: [
       "Everything in Monthly",
       "2 months free",
       "Early access to new features",
       "Exclusive premium support",
     ],
-    popular: true,
   },
 ] as const;
 
