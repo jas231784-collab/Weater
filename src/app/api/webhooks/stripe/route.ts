@@ -48,11 +48,12 @@ export async function POST(request: NextRequest) {
           typeof rawSub === 'string' ? rawSub : (rawSub as Stripe.Subscription | null)?.id ?? null;
 
         if (!userId && customerId) {
-          const { data: byCustomer } = await supabase
+          const { data } = await supabase
             .from('users')
             .select('id')
             .eq('stripe_customer_id', customerId)
             .single();
+          const byCustomer = data as { id: string } | null;
           userId = byCustomer?.id ?? undefined;
         }
 
