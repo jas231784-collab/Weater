@@ -35,7 +35,8 @@ async function syncUserToDb(authUser: { id: string; email?: string | null; user_
       role: isAdmin ? 'admin' : 'user',
       blocked: false,
     };
-    await adminClient.from('users').upsert(userData, { onConflict: 'id' });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Supabase upsert generic inference can resolve to never
+    await adminClient.from('users').upsert(userData as any, { onConflict: 'id' });
     const { data } = await adminClient.from('users').select('*').eq('id', authUser.id).single();
     return data as UserRow | null;
   } catch {
