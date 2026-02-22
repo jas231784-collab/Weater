@@ -3,14 +3,18 @@ import { NextResponse, type NextRequest } from 'next/server';
 import { getSupabaseAnonKey } from '@/lib/supabase/keys';
 
 export async function middleware(request: NextRequest) {
-  let response = NextResponse.next({
+  const response = NextResponse.next({
     request: { headers: request.headers },
   });
 
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    getSupabaseAnonKey(),
-    {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseAnonKey = getSupabaseAnonKey();
+  if (!supabaseUrl || !supabaseAnonKey) {
+    return response;
+  }
+
+  try {
+    const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
       cookies: {
         getAll() {
           return request.cookies.getAll();
@@ -21,10 +25,11 @@ export async function middleware(request: NextRequest) {
           );
         },
       },
-    }
-  );
-
-  await supabase.auth.getUser();
+    });
+    await supabase.auth.getUser();
+  } catch {
+    // Не падаем с 500: пропускаем обновление сессии (например, нет сети или неверные env)
+  }
 
   return response;
 }
