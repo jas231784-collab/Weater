@@ -112,16 +112,16 @@ export function CurrencyCard({
         <CardHeader>
           <div className="flex flex-wrap items-center justify-between gap-2">
             <div>
-              <CardTitle>Currency Exchange Rates</CardTitle>
+              <CardTitle>Курсы валют НБРБ</CardTitle>
               <CardDescription>
-                Official rates from the National Bank of Belarus
-                {date && ` (${new Date(date).toLocaleDateString()})`}
+                Официальные курсы Национального банка Республики Беларусь
+                {date && ` (${new Date(date).toLocaleDateString('ru-RU')})`}
               </CardDescription>
             </div>
             {onDateChange && selectedDate ? (
               <div className="flex items-center gap-2">
                 <Label htmlFor="currency-date" className="text-muted-foreground text-xs whitespace-nowrap">
-                  Date
+                  Дата
                 </Label>
                 <Input
                   id="currency-date"
@@ -138,9 +138,9 @@ export function CurrencyCard({
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Currency</TableHead>
-                <TableHead>Code</TableHead>
-                <TableHead className="text-right">Rate (BYN)</TableHead>
+                <TableHead>Валюта</TableHead>
+                <TableHead>Код</TableHead>
+                <TableHead className="text-right">Курс (BYN)</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -163,22 +163,22 @@ export function CurrencyCard({
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            Currency Converter
+            Конвертер валют
             {!isPremium && (
               <span className="text-xs bg-yellow-500 text-white px-2 py-0.5 rounded-full">
-                Basic
+                Базовый
               </span>
             )}
           </CardTitle>
           <CardDescription>
-            Convert between BYN and major currencies
+            Конвертация между BYN и основными валютами
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid gap-4">
             <div className="grid grid-cols-[1fr,auto,1fr] gap-2 items-end">
               <div className="space-y-2">
-                <Label>Amount</Label>
+                <Label>Сумма</Label>
                 <Input
                   type="number"
                   value={amount}
@@ -186,7 +186,7 @@ export function CurrencyCard({
                     setAmount(e.target.value);
                     setResult(null);
                   }}
-                  placeholder="Enter amount"
+                  placeholder="Введите сумму"
                 />
               </div>
               <Button
@@ -198,26 +198,26 @@ export function CurrencyCard({
                 <ArrowRightLeft className="h-4 w-4" />
               </Button>
               <div className="space-y-2">
-                <Label>Result</Label>
+                <Label>Результат</Label>
                 <Input
                   value={
                     result !== null ? result.toFixed(4) : ""
                   }
                   readOnly
-                  placeholder="Click Convert"
+                  placeholder="Нажмите «Конвертировать»"
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label>From</Label>
+                <Label>Из</Label>
                 <Select value={fromCurrency} onValueChange={setFromCurrency}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select currency" />
+                    <SelectValue placeholder="Выберите валюту" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="BYN">BYN (Belarusian Ruble)</SelectItem>
+                    <SelectItem value="BYN">BYN (Белорусский рубль)</SelectItem>
                     {rates.map((rate) => (
                       <SelectItem
                         key={rate.Cur_ID}
@@ -230,13 +230,13 @@ export function CurrencyCard({
                 </Select>
               </div>
               <div className="space-y-2">
-                <Label>To</Label>
+                <Label>В</Label>
                 <Select value={toCurrency} onValueChange={setToCurrency}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select currency" />
+                    <SelectValue placeholder="Выберите валюту" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="BYN">BYN (Belarusian Ruble)</SelectItem>
+                    <SelectItem value="BYN">BYN (Белорусский рубль)</SelectItem>
                     {rates.map((rate) => (
                       <SelectItem
                         key={rate.Cur_ID}
@@ -251,7 +251,7 @@ export function CurrencyCard({
             </div>
 
             <Button onClick={convert} className="w-full">
-              Convert
+              Конвертировать
             </Button>
           </div>
         </CardContent>

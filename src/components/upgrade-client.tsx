@@ -9,28 +9,28 @@ import { useToast } from "@/components/ui/use-toast";
 const PLAN_TEMPLATES = [
   {
     id: "monthly",
-    name: "Monthly",
+    name: "Месячный",
     price: "$9.99",
-    period: "/month",
+    period: "/мес",
     popular: false,
     features: [
-      "7-day extended forecast",
-      "Save multiple cities",
-      "Priority support",
-      "Ad-free experience",
+      "Прогноз на 7 дней",
+      "Несколько городов",
+      "Приоритетная поддержка",
+      "Без рекламы",
     ],
   },
   {
     id: "yearly",
-    name: "Yearly",
+    name: "Годовой",
     price: "$99.99",
-    period: "/year",
+    period: "/год",
     popular: true,
     features: [
-      "Everything in Monthly",
-      "2 months free",
-      "Early access to new features",
-      "Exclusive premium support",
+      "Всё из месячного",
+      "2 месяца в подарок",
+      "Ранний доступ к новым функциям",
+      "Премиум-поддержка",
     ],
   },
 ] as const;
@@ -177,7 +177,7 @@ export default function UpgradeClient() {
                 <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
                   <span className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-3 py-1 rounded-full text-sm font-medium flex items-center gap-1">
                     <Crown className="h-3 w-3" />
-                    Best Value
+                    Выгодно
                   </span>
                 </div>
               )}
@@ -211,7 +211,7 @@ export default function UpgradeClient() {
                   ) : (
                     <Crown className="h-4 w-4 mr-2" />
                   )}
-                  Subscribe
+                  Подключить
                 </Button>
               </CardContent>
             </Card>

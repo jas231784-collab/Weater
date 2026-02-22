@@ -28,7 +28,7 @@ export function Header() {
                 <Link href="/admin">
                   <Button variant="ghost" size="sm">
                     <Shield className="h-4 w-4 mr-2" />
-                    Admin
+                    Админ
                   </Button>
                 </Link>
               )}
@@ -36,7 +36,7 @@ export function Header() {
               {session.user?.subscription_status === "premium" && (
                 <Badge variant="premium" className="mr-2">
                   <Crown className="h-3 w-3 mr-1" />
-                  Premium
+                  Премиум
                 </Badge>
               )}
 
@@ -44,7 +44,7 @@ export function Header() {
                 {session.user?.image ? (
                   <img
                     src={session.user.image}
-                    alt={session.user.name || "User"}
+                    alt={session.user.name || "Пользователь"}
                     className="h-8 w-8 rounded-full"
                   />
                 ) : (

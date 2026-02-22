@@ -8,8 +8,8 @@ import { Providers } from "@/components/providers";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Weather & Currency Dashboard",
-  description: "Premium weather and currency exchange dashboard",
+  title: "Погода и курсы валют",
+  description: "Погода и официальные курсы валют НБРБ",
 };
 
 export default function RootLayout({
@@ -18,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="ru" suppressHydrationWarning>
       <body className={inter.className}>
         <ThemeProvider
           attribute="class"

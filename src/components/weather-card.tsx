@@ -30,7 +30,7 @@ function WeatherIcon({ iconCode }: { iconCode: string }) {
   return (
     <img
       src={src}
-      alt="Weather icon"
+      alt="Иконка погоды"
       className="w-16 h-16"
     />
   );
@@ -38,7 +38,7 @@ function WeatherIcon({ iconCode }: { iconCode: string }) {
 
 function formatTime(timestamp: number, timezone: number): string {
   const date = new Date((timestamp + timezone) * 1000);
-  return date.toLocaleTimeString("en-US", {
+  return date.toLocaleTimeString("ru-RU", {
     hour: "2-digit",
     minute: "2-digit",
     timeZone: "UTC",
@@ -69,12 +69,12 @@ export function WeatherCard({ data, forecast, loading, isPremium }: WeatherCardP
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <MapPin className="h-5 w-5" />
-            Weather
+            Погода
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="text-center text-muted-foreground py-8">
-            Enter a city name or use your location to get weather data
+            Введите город или используйте своё местоположение
           </div>
         </CardContent>
       </Card>
@@ -106,7 +106,7 @@ export function WeatherCard({ data, forecast, loading, isPremium }: WeatherCardP
             <div className="grid grid-cols-2 gap-2 text-sm">
               <div className="flex items-center gap-2">
                 <Thermometer className="h-4 w-4 text-muted-foreground" />
-                <span>Feels: {Math.round(data.main.feels_like)}°C</span>
+                <span>Ощущается: {Math.round(data.main.feels_like)}°C</span>
               </div>
               <div className="flex items-center gap-2">
                 <Droplets className="h-4 w-4 text-muted-foreground" />
@@ -128,17 +128,17 @@ export function WeatherCard({ data, forecast, loading, isPremium }: WeatherCardP
               <>
                 <div className="flex items-center gap-2 text-sm">
                   <Sunrise className="h-4 w-4 text-orange-500" />
-                  <span>Sunrise: {formatTime(data.sys.sunrise, data.timezone)}</span>
+                  <span>Восход: {formatTime(data.sys.sunrise, data.timezone)}</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm">
                   <Sunset className="h-4 w-4 text-orange-500" />
-                  <span>Sunset: {formatTime(data.sys.sunset, data.timezone)}</span>
+                  <span>Закат: {formatTime(data.sys.sunset, data.timezone)}</span>
                 </div>
               </>
             )}
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <span>H: {Math.round(data.main.temp_max)}°C</span>
-              <span>L: {Math.round(data.main.temp_min)}°C</span>
+              <span>Макс: {Math.round(data.main.temp_max)}°C</span>
+              <span>Мин: {Math.round(data.main.temp_min)}°C</span>
             </div>
           </div>
         </CardContent>
@@ -147,10 +147,10 @@ export function WeatherCard({ data, forecast, loading, isPremium }: WeatherCardP
       <Card>
         <CardHeader>
           <CardTitle className="text-lg">
-            {isPremium ? "7-Day Forecast" : "5-Day Forecast"}
+            {isPremium ? "Прогноз на 7 дней" : "Прогноз на 5 дней"}
             {!isPremium && (
               <span className="text-xs text-muted-foreground ml-2">
-                (Premium: 7 days)
+                (Премиум: 7 дней)
               </span>
             )}
           </CardTitle>
@@ -169,7 +169,7 @@ export function WeatherCard({ data, forecast, loading, isPremium }: WeatherCardP
                 {index >= 5 && !isPremium && (
                   <div className="absolute inset-0 flex items-center justify-center">
                     <span className="text-xs bg-yellow-500 text-white px-1 rounded">
-                      PRO
+                      ПРО
                     </span>
                   </div>
                 )}

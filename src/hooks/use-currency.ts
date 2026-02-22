@@ -28,7 +28,7 @@ export function useCurrency() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to fetch currency rates');
+        throw new Error(data.error || 'Не удалось загрузить курсы валют');
       }
 
       setState({
@@ -40,7 +40,7 @@ export function useCurrency() {
 
       return data.rates;
     } catch (error) {
-      const message = error instanceof Error ? error.message : 'Failed to fetch currency rates';
+      const message = error instanceof Error ? error.message : 'Не удалось загрузить курсы валют';
       setState(prev => ({ ...prev, loading: false, error: message }));
       throw error;
     }

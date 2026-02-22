@@ -31,14 +31,14 @@ export default async function HomePage() {
 
         <section className="text-center space-y-6 py-12">
           <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
-            Weather & Currency
+            Погода и курсы валют
             <br />
             <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
-              Dashboard
+              НБРБ
             </span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Get real-time weather updates and currency exchange rates from the National Bank of Belarus in one beautiful dashboard.
+            Актуальная погода и официальные курсы валют Национального банка Республики Беларусь в одном месте.
           </p>
           <div className="flex justify-center gap-4 pt-4">
             <Link href="/auth/register">
@@ -48,39 +48,39 @@ export default async function HomePage() {
             </Link>
             <Link href="#features">
               <Button size="lg" variant="outline">
-                Learn More
+                Подробнее
               </Button>
             </Link>
           </div>
         </section>
 
         <section id="features" className="py-12 space-y-8">
-          <h2 className="text-3xl font-bold text-center">Features</h2>
+          <h2 className="text-3xl font-bold text-center">Возможности</h2>
           <div className="grid md:grid-cols-3 gap-6">
             <Card>
               <CardHeader>
                 <Zap className="h-10 w-10 text-yellow-500 mb-2" />
-                <CardTitle>Real-time Weather</CardTitle>
+                <CardTitle>Погода онлайн</CardTitle>
                 <CardDescription>
-                  Get current conditions and forecasts for any city worldwide
+                  Текущая погода и прогноз по городам мира
                 </CardDescription>
               </CardHeader>
             </Card>
             <Card>
               <CardHeader>
                 <MapPin className="h-10 w-10 text-blue-500 mb-2" />
-                <CardTitle>Currency Exchange</CardTitle>
+                <CardTitle>Курсы валют НБРБ</CardTitle>
                 <CardDescription>
-                  Official daily rates from the National Bank of Belarus
+                  Официальные курсы Национального банка Беларуси
                 </CardDescription>
               </CardHeader>
             </Card>
             <Card>
               <CardHeader>
                 <Bell className="h-10 w-10 text-green-500 mb-2" />
-                <CardTitle>Premium Features</CardTitle>
+                <CardTitle>Премиум</CardTitle>
                 <CardDescription>
-                  Extended forecasts, ad-free experience, and more
+                  Расширенный прогноз, без рекламы и другие преимущества
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -88,31 +88,31 @@ export default async function HomePage() {
         </section>
 
         <section className="py-12 space-y-8">
-          <h2 className="text-3xl font-bold text-center">Pricing</h2>
+          <h2 className="text-3xl font-bold text-center">Тарифы</h2>
           <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
             <Card>
               <CardHeader>
-                <CardTitle>Free</CardTitle>
-                <CardDescription>Basic features for casual users</CardDescription>
+                <CardTitle>Бесплатно</CardTitle>
+                <CardDescription>Базовые возможности</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="text-4xl font-bold mb-6">$0<span className="text-lg text-muted-foreground">/mo</span></div>
+                <div className="text-4xl font-bold mb-6">0 ₽<span className="text-lg text-muted-foreground">/мес</span></div>
                 <ul className="space-y-3">
                   <li className="flex items-center gap-2">
                     <Check className="h-5 w-5 text-green-500" />
-                    <span>Current weather data</span>
+                    <span>Текущая погода</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <Check className="h-5 w-5 text-green-500" />
-                    <span>5-day forecast</span>
+                    <span>Прогноз на 5 дней</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <Check className="h-5 w-5 text-green-500" />
-                    <span>Currency exchange rates</span>
+                    <span>Курсы валют НБРБ</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <Check className="h-5 w-5 text-green-500" />
-                    <span>Basic currency converter</span>
+                    <span>Конвертер валют</span>
                   </li>
                 </ul>
                 <Link href="/auth/register" className="block mt-6">
@@ -127,40 +127,40 @@ export default async function HomePage() {
               <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
                 <span className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-3 py-1 rounded-full text-sm font-medium flex items-center gap-1">
                   <Crown className="h-3 w-3" />
-                  Premium
+                  Премиум
                 </span>
               </div>
               <CardHeader>
-                <CardTitle>Premium</CardTitle>
-                <CardDescription>Full access to all features</CardDescription>
+                <CardTitle>Премиум</CardTitle>
+                <CardDescription>Все возможности без ограничений</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="text-4xl font-bold mb-6">$9.99<span className="text-lg text-muted-foreground">/mo</span></div>
+                <div className="text-4xl font-bold mb-6">$9.99<span className="text-lg text-muted-foreground">/мес</span></div>
                 <ul className="space-y-3">
                   <li className="flex items-center gap-2">
                     <Check className="h-5 w-5 text-green-500" />
-                    <span>Everything in Free</span>
+                    <span>Всё из тарифа «Бесплатно»</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <Check className="h-5 w-5 text-green-500" />
-                    <span>7-day extended forecast</span>
+                    <span>Прогноз на 7 дней</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <Check className="h-5 w-5 text-green-500" />
-                    <span>Save multiple cities</span>
+                    <span>Несколько городов</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <Check className="h-5 w-5 text-green-500" />
-                    <span>Priority support</span>
+                    <span>Приоритетная поддержка</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <Check className="h-5 w-5 text-green-500" />
-                    <span>Ad-free experience</span>
+                    <span>Без рекламы</span>
                   </li>
                 </ul>
                 <Link href="/auth/register" className="block mt-6">
                   <Button className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600">
-                    Upgrade Now
+                    Подключить
                   </Button>
                 </Link>
               </CardContent>

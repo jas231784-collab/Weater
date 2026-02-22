@@ -132,9 +132,9 @@ export default function DashboardPage() {
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold">Dashboard</h1>
+          <h1 className="text-3xl font-bold">Панель управления</h1>
           <p className="text-muted-foreground">
-            Welcome back, {session?.user?.name || session?.user?.email}
+            С возвращением, {session?.user?.name || session?.user?.email}
           </p>
         </div>
 
@@ -142,7 +142,7 @@ export default function DashboardPage() {
           <Link href="/dashboard/upgrade">
             <Button className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600">
               <Crown className="h-4 w-4 mr-2" />
-              Upgrade to Premium
+              Подключить Премиум
             </Button>
           </Link>
         )}
@@ -153,7 +153,7 @@ export default function DashboardPage() {
           <div className="relative flex-1" ref={suggestionsRef}>
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
-              placeholder="Search city..."
+              placeholder="Поиск города..."
               value={cityInput}
               onChange={(e) => {
                 setCityInput(e.target.value);
@@ -168,7 +168,7 @@ export default function DashboardPage() {
                 {citySuggestionsLoading ? (
                   <div className="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground">
                     <Loader2 className="h-4 w-4 animate-spin" />
-                    Searching...
+                    Поиск…
                   </div>
                 ) : (
                   citySuggestions.map((s) => (
@@ -195,7 +195,7 @@ export default function DashboardPage() {
             {weather.loading ? (
               <Loader2 className="h-4 w-4 animate-spin" />
             ) : (
-              "Search"
+              "Найти"
             )}
           </Button>
         </form>
@@ -205,7 +205,7 @@ export default function DashboardPage() {
           disabled={weather.loading}
         >
           <MapPin className="h-4 w-4 mr-2" />
-          Use My Location
+          Моё местоположение
         </Button>
       </div>
 
@@ -230,9 +230,9 @@ export default function DashboardPage() {
           />
         ) : (
           <div className="rounded-lg border border-dashed p-6 text-center text-muted-foreground">
-            <p>Currency rates and converter are available for premium subscribers.</p>
+            <p>Курсы валют НБРБ и конвертер доступны по подписке Премиум.</p>
             <Link href="/dashboard/upgrade" className="text-primary underline mt-2 inline-block">
-              Upgrade to Premium
+              Подключить Премиум
             </Link>
           </div>
         )}

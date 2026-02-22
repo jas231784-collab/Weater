@@ -25,9 +25,9 @@ export default async function UpgradePage() {
           </Button>
         </Link>
         <div>
-          <h1 className="text-3xl font-bold">Upgrade to Premium</h1>
+          <h1 className="text-3xl font-bold">Подключить Премиум</h1>
           <p className="text-muted-foreground">
-            Unlock all features and get the most out of WeatherFX
+            Откройте все возможности WeatherFX
           </p>
         </div>
       </div>

@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
     const isPremium = session.user?.subscription_status === 'premium';
     if (!isAdmin && !isPremium) {
       return NextResponse.json(
-        { error: 'Currency rates are available for admins and premium users only' },
+        { error: 'Курсы валют доступны только премиум и администраторам' },
         { status: 403 }
       );
     }
