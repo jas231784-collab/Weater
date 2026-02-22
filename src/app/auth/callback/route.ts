@@ -47,11 +47,14 @@ export async function GET(request: Request) {
         .single();
 
       if (!existing) {
+        const meta = authUser.user_metadata ?? {};
+        const name = (meta.full_name ?? meta.name) as string | null;
+        const image = (meta.avatar_url ?? meta.picture) as string | null;
         const userData: UserInsert = {
           id: authUser.id,
           email: authUser.email!.toLowerCase(),
-          name: authUser.user_metadata?.full_name ?? authUser.user_metadata?.name ?? null,
-          image: authUser.user_metadata?.avatar_url ?? authUser.user_metadata?.picture ?? null,
+          name: name ?? null,
+          image: image ?? null,
           subscription_status: 'free',
           role: isAdmin ? 'admin' : 'user',
           blocked: false,
