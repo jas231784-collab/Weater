@@ -25,7 +25,8 @@ type SearchItem = {
 };
 
 function toSuggestions(list: unknown[]): CitySuggestion[] {
-  return list.slice(0, 8).map((item: SearchItem, index: number) => {
+  return list.slice(0, 8).map((raw: unknown, index: number) => {
+    const item = raw as SearchItem;
     const id = typeof item?.id === 'number' ? item.id
       : typeof item?.geoname_id === 'number' ? item.geoname_id
       : typeof item?.geoname_id === 'string' ? parseInt(item.geoname_id, 10) || index
