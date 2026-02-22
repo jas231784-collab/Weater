@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { CurrencyRate } from '@/types';
 
-const NBRB_API_BASE = 'https://www.nbrb.by/api/exrates/rates';
+/** Официальный API НБРБ: https://www.nbrb.by/apihelp/exrates */
+const NBRB_API_BASE = 'https://api.nbrb.by/exrates/rates';
 /** 6 основных валют НБРБ: ID валюты → код (для запасного запроса по ID) */
 const MAIN_CURRENCY_IDS: { id: number; code: string }[] = [
   { id: 431, code: 'USD' },
