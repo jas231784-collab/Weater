@@ -23,7 +23,7 @@ async function fetchRatesByIds(ondate?: string): Promise<CurrencyRate[]> {
       return res.json() as Promise<CurrencyRate | null>;
     })
   );
-  const rates = results.filter((r): r is CurrencyRate => r != null && r.Cur_Abbreviation);
+  const rates = results.filter((r): r is CurrencyRate => r != null && Boolean(r.Cur_Abbreviation));
   return rates.sort((a, b) => {
     const ai = MAIN_CURRENCY_IDS.findIndex((c) => c.code === a.Cur_Abbreviation);
     const bi = MAIN_CURRENCY_IDS.findIndex((c) => c.code === b.Cur_Abbreviation);
