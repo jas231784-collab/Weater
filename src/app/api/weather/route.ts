@@ -152,8 +152,18 @@ export async function GET(request: NextRequest) {
       current,
     };
 
-    if (needForecast && data.forecast?.forecastday?.length) {
-      response.forecast = mapToDailyForecast(data.forecast.forecastday);
+    if (needForecast) {
+      const raw = data as Record<string, unknown>;
+      const forecastObj = raw.forecast ?? raw.Forecast;
+      const forecastday = Array.isArray(forecastObj)
+        ? forecastObj
+        : (forecastObj as { forecastday?: WeatherAPIForecastDay[] } | undefined)?.forecastday ??
+          (forecastObj as { Forecastday?: WeatherAPIForecastDay[] } | undefined)?.Forecastday;
+      if (Array.isArray(forecastday) && forecastday.length > 0) {
+        response.forecast = mapToDailyForecast(forecastday);
+      } else {
+        response.forecast = [];
+      }
     }
 
     return NextResponse.json(response);

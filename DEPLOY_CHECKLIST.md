@@ -17,6 +17,7 @@
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` или `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY` | Там же → anon public |
 | `SUPABASE_SERVICE_ROLE_KEY` | Там же → service_role key |
 | **`NEXT_PUBLIC_SITE_URL`** | **Обязательно:** `https://weater-eta.vercel.app` — без этого возврат после входа через Google сломается |
+| **`WEATHERAPI_API_KEY`** | **Для погоды и прогноза:** ключ с [weatherapi.com](https://www.weatherapi.com/) (Sign Up → API Key). Без него запросы к `/api/weather` и `/api/weather/cities` возвращают 500 |
 | `ADMIN_EMAILS` | Твой email, например `admin@example.com` |
 
 3. Сохрани и сделай **Redeploy** (Deployments → … → Redeploy).

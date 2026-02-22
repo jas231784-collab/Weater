@@ -156,8 +156,13 @@ export function WeatherCard({ data, forecast, loading, isPremium }: WeatherCardP
           </CardTitle>
         </CardHeader>
         <CardContent>
+          {(!forecast || forecast.length === 0) ? (
+            <p className="text-sm text-muted-foreground text-center py-4">
+              Прогноз по выбранному месту недоступен. Проверьте ключ WEATHERAPI_API_KEY и лимиты API.
+            </p>
+          ) : (
           <div className="grid grid-cols-5 gap-2">
-            {(isPremium ? forecast?.slice(0, 7) : forecast?.slice(0, 5))?.map((day, index) => (
+            {(isPremium ? forecast.slice(0, 7) : forecast.slice(0, 5)).map((day, index) => (
               <div
                 key={day.date}
                 className={`text-center p-2 rounded-lg ${
@@ -194,6 +199,7 @@ export function WeatherCard({ data, forecast, loading, isPremium }: WeatherCardP
               </div>
             ))}
           </div>
+          )}
         </CardContent>
       </Card>
     </div>

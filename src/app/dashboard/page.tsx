@@ -83,12 +83,16 @@ export default function DashboardPage() {
     debounceRef.current = setTimeout(() => {
       setCitySuggestionsLoading(true);
       fetch(`/api/weather/cities?q=${encodeURIComponent(q)}`)
-        .then((res) => res.json())
-        .then((data) => {
-          setCitySuggestions(Array.isArray(data) ? data : []);
-          setShowSuggestions(Array.isArray(data) && data.length > 0);
+        .then((res) => res.json().then((data) => ({ ok: res.ok, data })))
+        .then(({ ok, data }) => {
+          const list = ok && Array.isArray(data) ? data : [];
+          setCitySuggestions(list);
+          setShowSuggestions(true);
         })
-        .catch(() => setCitySuggestions([]))
+        .catch(() => {
+          setCitySuggestions([]);
+          setShowSuggestions(true);
+        })
         .finally(() => setCitySuggestionsLoading(false));
     }, 300);
     return () => {
@@ -169,6 +173,10 @@ export default function DashboardPage() {
                   <div className="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground">
                     <Loader2 className="h-4 w-4 animate-spin" />
                     Поиск…
+                  </div>
+                ) : citySuggestions.length === 0 ? (
+                  <div className="px-3 py-3 text-sm text-muted-foreground">
+                    Ничего не найдено. Проверьте запрос или настройку WEATHERAPI_API_KEY.
                   </div>
                 ) : (
                   citySuggestions.map((s) => (
