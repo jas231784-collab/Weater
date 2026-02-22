@@ -108,7 +108,11 @@ export default function DashboardPage() {
       setCityInput(label);
       setCitySuggestions([]);
       setShowSuggestions(false);
-      weather.fetchWeather(suggestion.name);
+      if (suggestion.lat != null && suggestion.lon != null) {
+        weather.fetchWeather(undefined, suggestion.lat, suggestion.lon);
+      } else {
+        weather.fetchWeather(suggestion.name);
+      }
     },
     [weather]
   );

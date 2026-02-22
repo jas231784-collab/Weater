@@ -121,6 +121,16 @@ async function fetchWeather(
   return data as WeatherAPIForecastResponse;
 }
 
+async function searchLocation(query: string): Promise<{ lat: number; lon: number } | null> {
+  const url = `${BASE_URL}/search.json?key=${encodeURIComponent(WEATHERAPI_KEY!)}&q=${encodeURIComponent(query)}`;
+  const res = await fetch(url);
+  const data = await res.json();
+  if (!res.ok || !Array.isArray(data) || data.length === 0) return null;
+  const first = data[0] as { lat?: number; lon?: number };
+  if (typeof first?.lat === 'number' && typeof first?.lon === 'number') return { lat: first.lat, lon: first.lon };
+  return null;
+}
+
 export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams;
@@ -136,7 +146,7 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const q = city ? city : lat && lon ? `${lat},${lon}` : null;
+    let q: string | null = city ? city : lat && lon ? `${lat},${lon}` : null;
     if (!q) {
       return NextResponse.json(
         { error: 'Please provide city name or coordinates (lat, lon)' },
@@ -145,7 +155,23 @@ export async function GET(request: NextRequest) {
     }
 
     const days = needForecast ? 7 : 1;
-    const data = await fetchWeather(q, days);
+    let data: WeatherAPIForecastResponse;
+    try {
+      data = await fetchWeather(q, days);
+    } catch (firstError) {
+      const msg = firstError instanceof Error ? firstError.message : '';
+      if (city && (msg.includes('No matching location') || msg.includes('matching location'))) {
+        const coords = await searchLocation(city);
+        if (coords) {
+          q = `${coords.lat},${coords.lon}`;
+          data = await fetchWeather(q, days);
+        } else {
+          throw firstError;
+        }
+      } else {
+        throw firstError;
+      }
+    }
 
     const current = mapToWeatherData(data.location, data.current);
     const response: { current: WeatherData; forecast?: DailyForecast[] } = {
