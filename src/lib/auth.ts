@@ -45,36 +45,40 @@ async function syncUserToDb(authUser: { id: string; email?: string | null; user_
 }
 
 export async function auth(): Promise<Session | null> {
-  const supabase = await createClient();
-  const {
-    data: { user: authUser },
-  } = await supabase.auth.getUser();
+  try {
+    const supabase = await createClient();
+    const {
+      data: { user: authUser },
+    } = await supabase.auth.getUser();
 
-  if (!authUser?.email) return null;
+    if (!authUser?.email) return null;
 
-  const { data: dbUserData } = await supabase
-    .from('users')
-    .select('*')
-    .eq('id', authUser.id)
-    .single();
+    const { data: dbUserData } = await supabase
+      .from('users')
+      .select('*')
+      .eq('id', authUser.id)
+      .single();
 
-  let user: UserRow | null = dbUserData as UserRow | null;
-  if (!user && process.env.SUPABASE_SERVICE_ROLE_KEY) {
-    user = await syncUserToDb(authUser);
+    let user: UserRow | null = dbUserData as UserRow | null;
+    if (!user && process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      user = await syncUserToDb(authUser);
+    }
+    if (!user || user.blocked) return null;
+
+    return {
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        image: user.image,
+        role: user.role,
+        subscription_status: user.subscription_status,
+        subscription_end: user.subscription_end,
+      },
+    };
+  } catch {
+    return null;
   }
-  if (!user || user.blocked) return null;
-
-  return {
-    user: {
-      id: user.id,
-      email: user.email,
-      name: user.name,
-      image: user.image,
-      role: user.role,
-      subscription_status: user.subscription_status,
-      subscription_end: user.subscription_end,
-    },
-  };
 }
 
 export async function signIn(redirectTo = '/dashboard') {

@@ -17,12 +17,18 @@ export async function GET(request: Request) {
     return NextResponse.redirect(`${origin}/auth/error?error=missing_code`);
   }
 
-  const supabase = await createClient();
-  const { data: authData, error } = await supabase.auth.exchangeCodeForSession(code);
-
-  if (error) {
-    console.error('Auth callback error:', error);
-    return NextResponse.redirect(`${origin}/auth/error?error=${encodeURIComponent(error.message)}`);
+  let authData: { user?: { id: string; email?: string; user_metadata?: Record<string, unknown> } };
+  try {
+    const supabase = await createClient();
+    const result = await supabase.auth.exchangeCodeForSession(code);
+    if (result.error) {
+      console.error('Auth callback error:', result.error);
+      return NextResponse.redirect(`${origin}/auth/error?error=${encodeURIComponent(result.error.message)}`);
+    }
+    authData = result.data;
+  } catch (err) {
+    console.error('Auth callback exception:', err);
+    return NextResponse.redirect(`${origin}/auth/error?error=server_error`);
   }
 
   const authUser = authData.user;
