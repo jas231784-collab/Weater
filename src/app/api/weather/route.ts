@@ -153,7 +153,7 @@ export async function GET(request: NextRequest) {
     };
 
     if (needForecast) {
-      const raw = data as Record<string, unknown>;
+      const raw = data as unknown as Record<string, unknown>;
       const forecastObj = raw.forecast ?? raw.Forecast;
       const forecastday = Array.isArray(forecastObj)
         ? forecastObj
