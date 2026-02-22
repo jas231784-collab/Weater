@@ -18,6 +18,7 @@
 | `SUPABASE_SERVICE_ROLE_KEY` | Там же → service_role key |
 | **`NEXT_PUBLIC_SITE_URL`** | **Обязательно:** `https://weater-eta.vercel.app` — без этого возврат после входа через Google сломается |
 | **`WEATHERAPI_API_KEY`** | **Для погоды и прогноза:** ключ с [weatherapi.com](https://www.weatherapi.com/) (Sign Up → API Key). Без него запросы к `/api/weather` и `/api/weather/cities` возвращают 500 |
+| **`STRIPE_SECRET_KEY`** | **Для оплаты Премиум:** секретный ключ из [Stripe Dashboard](https://dashboard.stripe.com/test/apikeys) (Secret key). В Stripe создай продукт и два Price с **Lookup key** = `monthly` и `yearly` |
 | `ADMIN_EMAILS` | Твой email, например `admin@example.com` |
 
 3. Сохрани и сделай **Redeploy** (Deployments → … → Redeploy).

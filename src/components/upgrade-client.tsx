@@ -43,6 +43,7 @@ export default function UpgradeClient() {
     yearly: "",
   });
   const [pricesLoading, setPricesLoading] = useState(true);
+  const [pricesError, setPricesError] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -51,14 +52,13 @@ export default function UpgradeClient() {
         const res = await fetch("/api/stripe/prices");
         const data = await res.json();
         if (cancelled) return;
-        if (res.ok) {
-          setPriceIds({
-            monthly: data.monthlyPriceId ?? "",
-            yearly: data.yearlyPriceId ?? "",
-          });
-        }
+        setPriceIds({
+          monthly: data.monthlyPriceId ?? "",
+          yearly: data.yearlyPriceId ?? "",
+        });
+        setPricesError(data.error ?? null);
       } catch {
-        if (!cancelled) setPriceIds((prev) => prev);
+        if (!cancelled) setPricesError("Не удалось загрузить тарифы Stripe");
       } finally {
         if (!cancelled) setPricesLoading(false);
       }
@@ -110,12 +110,14 @@ export default function UpgradeClient() {
         <Card className="border-amber-500/50 bg-amber-500/5">
           <CardHeader>
             <CardTitle className="text-amber-600 dark:text-amber-500">
-              Настройте цены в Stripe
+              Настройте Stripe
             </CardTitle>
+            {pricesError && (
+              <p className="text-sm text-amber-700 dark:text-amber-400 font-medium">{pricesError}</p>
+            )}
             <div className="text-sm text-muted-foreground space-y-2">
               <p>
-                Цены подставляются по <strong>lookup_key</strong>. Не нужны переменные окружения с
-                Price ID.
+                Цены подставляются по <strong>lookup_key</strong>. В Vercel добавьте <strong>STRIPE_SECRET_KEY</strong>. В Stripe создайте два Price с lookup_key &quot;monthly&quot; и &quot;yearly&quot;.
               </p>
               <ol className="list-decimal list-inside text-sm space-y-1 mt-2">
                 <li>

@@ -3,6 +3,7 @@ import { auth } from '@/lib/auth';
 import { createClient } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { getStripe } from '@/lib/stripe';
+import { getSiteUrl } from '@/lib/supabase/url';
 import type { Database } from '@/types/database';
 
 type UserRow = Database['public']['Tables']['users']['Row'];
@@ -68,8 +69,8 @@ export async function POST(request: NextRequest) {
           quantity: 1,
         },
       ],
-      success_url: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard/upgrade?canceled=true`,
+      success_url: `${getSiteUrl().replace(/\/$/, '')}/dashboard?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${getSiteUrl().replace(/\/$/, '')}/dashboard/upgrade?canceled=true`,
       metadata: {
         userId: user.id,
       },

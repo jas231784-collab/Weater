@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getStripe } from '@/lib/stripe';
+import { getStripe, isStripeConfigured } from '@/lib/stripe';
 
 /**
  * Returns subscription Price IDs from Stripe by lookup_key.
@@ -11,6 +11,13 @@ import { getStripe } from '@/lib/stripe';
  * Then no env vars for price IDs are needed.
  */
 export async function GET() {
+  const empty = { monthlyPriceId: null, yearlyPriceId: null, error: null as string | null };
+  if (!isStripeConfigured()) {
+    return NextResponse.json({
+      ...empty,
+      error: 'STRIPE_SECRET_KEY не задан. Добавьте ключ в Vercel → Environment Variables.',
+    });
+  }
   try {
     const stripe = getStripe();
     const { data: prices } = await stripe.prices.list({
@@ -24,13 +31,14 @@ export async function GET() {
     return NextResponse.json({
       monthlyPriceId: monthly?.id ?? null,
       yearlyPriceId: yearly?.id ?? null,
+      error: null,
     });
   } catch (error) {
     console.error('Stripe prices fetch error:', error);
     const message = error instanceof Error ? error.message : 'Failed to fetch prices';
     return NextResponse.json(
-      { error: message, monthlyPriceId: null, yearlyPriceId: null },
-      { status: 500 }
+      { ...empty, error: message },
+      { status: 200 }
     );
   }
 }

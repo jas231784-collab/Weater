@@ -55,22 +55,34 @@ export async function GET(request: NextRequest) {
 
   try {
     const url = `${BASE_URL}/search.json?key=${encodeURIComponent(WEATHERAPI_KEY)}&q=${encodeURIComponent(q)}`;
-    const response = await fetch(url, { next: { revalidate: 60 } });
+    const response = await fetch(url, {
+      headers: { Accept: 'application/json' },
+      cache: 'no-store',
+    });
     const data = await response.json();
 
     if (!response.ok) {
-      const err = data as { error?: { message?: string } };
-      throw new Error(err?.error?.message ?? 'Search failed');
+      const err = data as { error?: { message?: string; code?: number } };
+      const msg = err?.error?.message ?? (typeof data?.error === 'string' ? data.error : 'Search failed');
+      console.error('WeatherAPI search error:', response.status, msg);
+      return NextResponse.json({ error: msg }, { status: response.status >= 500 ? 502 : response.status });
     }
 
-    const list = Array.isArray(data) ? data : (data && typeof data === 'object' && Array.isArray((data as { locations?: unknown[] }).locations) ? (data as { locations: unknown[] }).locations : []);
-    const suggestions = toSuggestions(list);
+    let list: unknown[] = [];
+    if (Array.isArray(data)) {
+      list = data;
+    } else if (data && typeof data === 'object') {
+      const obj = data as Record<string, unknown>;
+      if (Array.isArray(obj.locations)) list = obj.locations;
+      else if (Array.isArray(obj.data)) list = obj.data;
+      else if (Array.isArray(obj.results)) list = obj.results;
+      else if (obj.name != null || obj.city != null || (obj.lat != null && obj.lon != null))
+        list = [data];
+    }
+    const suggestions = toSuggestions(list).filter((s) => s.name.length > 0);
     return NextResponse.json(suggestions);
   } catch (error) {
     console.error('Weather cities search error:', error);
-    return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Failed to search cities' },
-      { status: 500 }
-    );
+    return NextResponse.json([], { status: 200 });
   }
 }
